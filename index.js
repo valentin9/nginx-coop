@@ -4,13 +4,15 @@ import path from 'path';
 import util from 'util';
 import os from 'os';
 import asyncHandler from 'express-async-handler';
+import ConfigParser from "@webantic/nginx-config-parser";
+
+const nginxParser = new ConfigParser();
+const app = express();
 
 const readdir = util.promisify(fs.readdir);
-const app = express();
+const readfile = util.promisify(fs.readFile);
+
 const NGINX_CONFIG_PATH = path.resolve(os.homedir(), '.nginx');
-
-console.log(NGINX_CONFIG_PATH);
-
 
 async function getConfigs(configFolderPath) {
     let list = await readdir(configFolderPath);
@@ -27,9 +29,23 @@ app.use((req, res, next) => {
 
 app.get('/nginx-configs-list', asyncHandler(async (req, res) => {
     let files = await getConfigs(NGINX_CONFIG_PATH);
+    files = files.map(async file => {
+        const configString = await readfile(path.resolve(NGINX_CONFIG_PATH, file));
+        // let configJson = nginxParser.toJSON(configString, { parseIncludes: false });
+        let configJson = nginxParser.readConfigFile(path.resolve(NGINX_CONFIG_PATH, file), { parseIncludes: false });
+        console.log(configJson);
+
+        return {
+            name: file,
+            site: file.slice(0, file.indexOf('.')),
+            json: configJson,
+            conf: configString,
+        };
+    });
+
     res.json(files);
 }));
 
 app.listen(3100, () => {
-    console.log('Example app listening on port 3100!');
+    console.log('Server listening on port 3100!');
 });
