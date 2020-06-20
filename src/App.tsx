@@ -7,28 +7,15 @@ import {
   Link
 } from 'react-router-dom';
 
-import { Layout, Menu, Breadcrumb, Table } from 'antd';
+import { Layout, Menu } from 'antd';
 import { UserOutlined, LaptopOutlined, NotificationOutlined } from '@ant-design/icons';
-
+import ConfigList from './components/ConfigList';
 const { SubMenu } = Menu;
-const { Header, Content, Sider } = Layout;
+const { Header, Sider } = Layout;
 
 const API_CONFIG_LIST = 'http://localhost:3100/nginx-configs';
-const columns = [
-  {
-    title: 'Name',
-    dataIndex: 'name',
-    key: 'name',
-  },
-  {
-    title: 'Site',
-    dataIndex: 'site',
-    key: 'site',
-  },
-];
 
-
-function Appy(props: any) {
+function App(props: any) {
   const [configList, setConfigList] = useState<undefined|Object[]>(undefined);
 
   useEffect(() => {
@@ -105,48 +92,4 @@ function getList(callback: Function): void
     });
 }
 
-function ConfigList(props: { configList?: any[] }) {
-  return (
-    <div>
-      <Breadcrumb style={{ margin: '16px 0' }}>
-        <Breadcrumb.Item>Home</Breadcrumb.Item>
-        <Breadcrumb.Item>List</Breadcrumb.Item>
-        <Breadcrumb.Item>App</Breadcrumb.Item>
-      </Breadcrumb>
-      <Content
-        className="site-layout-background"
-        style={{
-          padding: 24,
-          margin: 0,
-          minHeight: 280,
-        }}
-        >
-        <Table dataSource={props.configList} columns={columns} />
-      </Content>
-    </div>
-  );
-}
-
-function ConfigDetail({config}: { config?: Object }) {
-  return (
-    <div>
-      <Breadcrumb style={{ margin: '16px 0' }}>
-        <Breadcrumb.Item>Home</Breadcrumb.Item>
-        <Breadcrumb.Item>List</Breadcrumb.Item>
-        <Breadcrumb.Item>App</Breadcrumb.Item>
-      </Breadcrumb>
-      <Content
-        className="site-layout-background"
-        style={{
-          padding: 24,
-          margin: 0,
-          minHeight: 280,
-        }}
-        >
-        {JSON.stringify(config, undefined, 4)}
-      </Content>
-    </div>
-  );
-}
-
-export default Appy;
+export default App;
