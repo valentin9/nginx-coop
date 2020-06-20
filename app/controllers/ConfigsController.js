@@ -10,7 +10,7 @@ const readfile = util.promisify(fs.readFile);
 
 const NGINX_CONFIG_PATH = path.resolve(os.homedir(), '.nginx');
 
-async function getConfigs(files) {
+async function _getParsedConfigs(files) {
     const parsedFiles = await Promise.all(files.map(async file => {
         const configFile = await readfile(path.resolve(NGINX_CONFIG_PATH, file));
         const configJson = nginxParser.readConfigFile(path.resolve(NGINX_CONFIG_PATH, file), {
@@ -30,7 +30,7 @@ async function getConfigs(files) {
     return parsedFiles;
 }
 
-async function getConfigFiles(configFolderPath) {
+async function _getConfigFiles(configFolderPath) {
     let list = await readdir(configFolderPath);
     list = list.filter(file => file.indexOf('.conf') > -1);
 
@@ -38,8 +38,8 @@ async function getConfigFiles(configFolderPath) {
 }
 
 export async function getList(req, res) {
-    let files = await getConfigFiles(NGINX_CONFIG_PATH);
-    const parsedFiles = await getConfigs(files);
+    let files = await _getConfigFiles(NGINX_CONFIG_PATH);
+    const parsedFiles = await _getParsedConfigs(files);
 
     res.json(parsedFiles);
 }
