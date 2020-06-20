@@ -7,12 +7,10 @@ const columns = [
     {
         title: 'Name',
         dataIndex: 'name',
-        key: 'name',
     },
     {
         title: 'Site',
         dataIndex: 'site',
-        key: 'site',
     },
 ];
 
@@ -21,8 +19,7 @@ export default function ConfigList(props: { configList?: Object[] }) {
         <div>
             <Breadcrumb style={{ margin: '16px 0' }}>
                 <Breadcrumb.Item>Home</Breadcrumb.Item>
-                <Breadcrumb.Item>List</Breadcrumb.Item>
-                <Breadcrumb.Item>App</Breadcrumb.Item>
+                <Breadcrumb.Item>My configs</Breadcrumb.Item>
             </Breadcrumb>
             <Content
                 className="site-layout-background"
@@ -32,7 +29,7 @@ export default function ConfigList(props: { configList?: Object[] }) {
                     minHeight: 280,
                 }}
             >
-                <Table dataSource={props.configList} columns={columns} />
+                <Table dataSource={props.configList} columns={columns} rowKey={'name'} />
             </Content>
         </div>
     );
