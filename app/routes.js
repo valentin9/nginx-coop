@@ -1,8 +1,8 @@
 import express from 'express';
-const router = express.Router();
 import asyncHandler from 'express-async-handler';
-
 import * as ConfigsController from './controllers/ConfigsController.js';
+
+const router = express.Router();
 
 router.get('/nginx-configs', asyncHandler(ConfigsController.getList));
 

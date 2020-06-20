@@ -1,5 +1,6 @@
 import React from 'react';
 import { Layout, Breadcrumb, Table } from 'antd';
+
 const { Content } = Layout;
 
 const columns = [
@@ -15,7 +16,7 @@ const columns = [
     },
 ];
 
-export default function ConfigList(props: { configList?: any[] }) {
+export default function ConfigList(props: { configList?: Object[] }) {
     return (
         <div>
             <Breadcrumb style={{ margin: '16px 0' }}>

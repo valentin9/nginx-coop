@@ -1,5 +1,6 @@
 import React from 'react';
 import { Layout, Breadcrumb } from 'antd';
+
 const { Content } = Layout;
 
 export default function ConfigDetail({ config }: { config?: Object }) {

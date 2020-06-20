@@ -10,6 +10,7 @@ import {
 import { Layout, Menu } from 'antd';
 import { UserOutlined, LaptopOutlined, NotificationOutlined } from '@ant-design/icons';
 import ConfigList from './components/ConfigList';
+
 const { SubMenu } = Menu;
 const { Header, Sider } = Layout;
 
