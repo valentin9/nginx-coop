@@ -4,21 +4,25 @@ import {
   BrowserRouter as Router,
   Switch,
   Route,
-  Link
+  Link,
+  useParams,
 } from 'react-router-dom';
 
 import { Layout, Menu } from 'antd';
 import ConfigList from './components/ConfigList';
+import ConfigDetail from './components/ConfigDetail';
+import ConfigType from './interfaces/ConfigTypeInterface';
 
 const { Header, Sider } = Layout;
 
 const API_CONFIG_LIST = 'http://localhost:3100/nginx-configs';
 
 function App(props: any) {
-  const [configList, setConfigList] = useState<undefined|Object[]>(undefined);
+  const [configList, setConfigList] = useState<undefined | ConfigType[]>(undefined);
+  const [currentConfig, setCurrentConfig] = useState<undefined | ConfigType>(undefined);
 
   useEffect(() => {
-    getList((data: Object[]) => {
+    getList((data: ConfigType[]) => {
       setConfigList(data);
     });
   }, []);
@@ -50,10 +54,10 @@ function App(props: any) {
           <Layout style={{ padding: '0 24px 24px' }}>
             <Switch>
               <Route path="/configs">
-                <ConfigList configList={configList} />
+                <ConfigList configList={configList} setCurrentConfig={setCurrentConfig} />
               </Route>
-              <Route path="/configs">
-                <ConfigList />
+              <Route path="/config/:configName">
+                <ConfigDetail config={currentConfig} />
               </Route>
             </Switch>
 
