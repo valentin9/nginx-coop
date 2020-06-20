@@ -13,7 +13,7 @@ import { UserOutlined, LaptopOutlined, NotificationOutlined } from '@ant-design/
 const { SubMenu } = Menu;
 const { Header, Content, Sider } = Layout;
 
-const API_CONFIG_LIST = 'http://localhost:3100/nginx-configs-list';
+const API_CONFIG_LIST = 'http://localhost:3100/nginx-configs';
 const columns = [
   {
     title: 'Name',
