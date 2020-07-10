@@ -1,8 +1,10 @@
 import React from 'react';
 import { Layout, Breadcrumb } from 'antd';
+import ConfigType from '../interfaces/ConfigTypeInterface';
+
 const { Content } = Layout;
 
-export default function ConfigDetail({ config }: { config?: Object }) {
+export default function ConfigDetail({ config }: { config?: ConfigType }) {
     return (
         <div>
             <Breadcrumb style={{ margin: '16px 0' }}>
@@ -18,7 +20,11 @@ export default function ConfigDetail({ config }: { config?: Object }) {
                     minHeight: 280,
                 }}
             >
-                {JSON.stringify(config, undefined, 4)}
+                { config && (
+                    <pre>
+                        {JSON.stringify(config.json, undefined, 4)}
+                    </pre>
+                ) }
             </Content>
         </div>
     );

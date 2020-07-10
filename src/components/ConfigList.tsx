@@ -1,27 +1,40 @@
 import React from 'react';
 import { Layout, Breadcrumb, Table } from 'antd';
+import { useHistory } from 'react-router-dom';
+import ConfigType from '../interfaces/ConfigTypeInterface';
+
 const { Content } = Layout;
 
 const columns = [
     {
         title: 'Name',
         dataIndex: 'name',
-        key: 'name',
     },
     {
         title: 'Site',
         dataIndex: 'site',
-        key: 'site',
     },
 ];
 
-export default function ConfigList(props: { configList?: any[] }) {
+export default function ConfigList(props: { configList?: ConfigType[], setCurrentConfig?: Function }) {
+    const history = useHistory();
+
+    function navigateToDetail(record: any, rowIndex: any) {
+        return {
+            onClick: () => {
+                if (props.setCurrentConfig) {
+                    props.setCurrentConfig(record);
+                }
+                history.push(`/config/${ record.name }`);
+            },
+        };
+    }
+
     return (
         <div>
             <Breadcrumb style={{ margin: '16px 0' }}>
                 <Breadcrumb.Item>Home</Breadcrumb.Item>
-                <Breadcrumb.Item>List</Breadcrumb.Item>
-                <Breadcrumb.Item>App</Breadcrumb.Item>
+                <Breadcrumb.Item>My configs</Breadcrumb.Item>
             </Breadcrumb>
             <Content
                 className="site-layout-background"
@@ -31,7 +44,7 @@ export default function ConfigList(props: { configList?: any[] }) {
                     minHeight: 280,
                 }}
             >
-                <Table dataSource={props.configList} columns={columns} />
+                <Table dataSource={props.configList} columns={columns} rowKey={'name'} onRow={navigateToDetail} />
             </Content>
         </div>
     );
